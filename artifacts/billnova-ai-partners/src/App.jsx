@@ -59,28 +59,19 @@ function Logo({ footer = false }) {
   return <Link href="/" className={`brand ${footer ? 'footer-brand-logo' : ''}`} data-testid="link-logo"><span className="logo-crop"><img src={logo} alt="BillNova AI Partners Limited logo" /></span></Link>;
 }
 
-function TypingTagline({ words, typingSpeed = 70, deletingSpeed = 40, pause = 1500 }) {
+function RotatingWords({ words, interval = 2800 }) {
   const [index, setIndex] = useState(0);
-  const [text, setText] = useState('');
-  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
-    const current = words[index % words.length];
-    let timeout;
-    if (!deleting && text.length < current.length) {
-      timeout = setTimeout(() => setText(current.slice(0, text.length + 1)), typingSpeed);
-    } else if (!deleting && text.length === current.length) {
-      timeout = setTimeout(() => setDeleting(true), pause);
-    } else if (deleting && text.length > 0) {
-      timeout = setTimeout(() => setText(current.slice(0, text.length - 1)), deletingSpeed);
-    } else {
-      setDeleting(false);
-      setIndex((i) => (i + 1) % words.length);
-    }
-    return () => clearTimeout(timeout);
-  }, [text, deleting, index, words, typingSpeed, deletingSpeed, pause]);
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
+    const id = setInterval(() => setIndex((i) => (i + 1) % words.length), interval);
+    return () => clearInterval(id);
+  }, [words.length, interval]);
 
-  return <span className="typing-tagline" data-testid="text-typing-tagline">{text}<span className="typing-cursor" aria-hidden="true">|</span></span>;
+  const leaving = (index + words.length - 1) % words.length;
+  return <span className="rotating-word" data-testid="text-typing-tagline">
+    {words.map((word, i) => <span key={word} className={i === index ? 'is-active' : i === leaving ? 'is-leaving' : ''} aria-hidden={i !== index}>{word}</span>)}
+  </span>;
 }
 
 function Header() {
@@ -129,7 +120,7 @@ function SectionHeading({ title, intro, dark = false }) { return <div className=
 
 function AbstractVisual() {
   return <div className="hero-visual" aria-label="A connected framework showing Understand, Govern, Transform and Empower">
-    <div className="orbit"><div className="orbit-line" /><div className="orbit-line two" /><div className="core"><strong>AI</strong><small>PARTNERS</small></div>
+    <div className="orbit"><div className="orbit-lines"><div className="orbit-line" /><div className="orbit-line two" /></div><div className="core"><strong>AI</strong><small>PARTNERS</small></div>
       <div className="concept one"><b />UNDERSTAND</div><div className="concept two"><b />GOVERN</div><div className="concept three"><b />TRANSFORM</div><div className="concept four"><b />EMPOWER</div>
     </div><span className="visual-caption">A responsible path from insight to impact</span>
   </div>;
@@ -139,7 +130,7 @@ function Home() {
   return <>
     <main>
       <section className="hero"><div className="container hero-grid">
-        <div className="reveal"><span className="hero-mark-spin" aria-hidden="true"><img src={mark} alt="" /></span><h1 className="display">AI that moves with <em>confidence.</em></h1><p className="hero-lead">Your Partner in <TypingTagline words={["Responsible AI Adoption", "AI Governance", "AI Policies", "AI Transformation", "AI Risk & Ethics"]} /></p><p className="hero-copy">Helping organizations understand, govern, transform and scale AI for meaningful business impact.</p><div className="actions"><ButtonLink href="/contact" testId="button-hero-consultation">Book a Consultation</ButtonLink><ButtonLink href="/services" secondary testId="button-hero-services">Explore Our Services</ButtonLink></div><div className="hero-note"><span /> Built for boards, teams and the work between them</div></div>
+        <div className="reveal"><span className="hero-mark" aria-hidden="true"><img src={mark} alt="" /></span><h1 className="display">AI that moves with <em>confidence.</em></h1><p className="hero-lead">Your Partner in <RotatingWords words={["Responsible AI Adoption", "AI Governance", "AI Policies", "AI Transformation", "AI Risk & Ethics"]} /></p><p className="hero-copy">Helping organizations understand, govern, transform and scale AI for meaningful business impact.</p><div className="actions"><ButtonLink href="/contact" testId="button-hero-consultation">Book a Consultation</ButtonLink><ButtonLink href="/services" secondary testId="button-hero-services">Explore Our Services</ButtonLink></div><div className="hero-note"><span /> Built for boards, teams and the work between them</div></div>
         <AbstractVisual />
       </div></section>
       <div className="ribbon"><div className="container ribbon-inner"><strong>AI should create value you can stand behind.</strong><span>Understand <i className="dot">·</i> Govern <i className="dot">·</i> Transform <i className="dot">·</i> Empower</span></div></div>
