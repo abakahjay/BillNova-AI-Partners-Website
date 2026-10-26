@@ -47,3 +47,5 @@ Thumbs.db
 # Replit
 .cache/
 .local/
+.handoff/
+brag-output/work/
