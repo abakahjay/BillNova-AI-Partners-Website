@@ -1,9 +1,11 @@
 import { Link } from 'wouter';
 
-// Owner to confirm before launch: registered office address and a contact email.
-// Neither is published anywhere on the site yet, so neither is stated here.
 const UPDATED = '26 October 2026';
 const PHONE = '024 358 3573';
+const EMAIL = 'william202075@gmail.com';
+const LOCATION = 'Adenta, Accra, Ghana';
+const tel = <a href={`tel:${PHONE.replaceAll(' ', '')}`}>{PHONE}</a>;
+const mail = <a href={`mailto:${EMAIL}`}>{EMAIL}</a>;
 const CC_BY = 'https://creativecommons.org/licenses/by/2.0/';
 const UNSPLASH = 'https://unsplash.com/license';
 
@@ -25,7 +27,7 @@ export const privacyPolicy = {
   title: 'Privacy policy.',
   intro: 'What BillNova AI Partners Limited collects through this website, why, and the choices you have.',
   sections: [
-    ['Who we are', <p key="p">This website is run by BillNova AI Partners Limited, an AI advisory firm in Ghana. We are responsible for the personal data you send us through it. You can reach us on <a href={`tel:${PHONE.replaceAll(' ', '')}`}>{PHONE}</a>.</p>],
+    ['Who we are', <p key="p">This website is run by BillNova AI Partners Limited, an AI advisory firm based in {LOCATION}. We are responsible for the personal data you send us through it. You can reach us on {tel} or at {mail}.</p>],
     ['What we collect', <>
       <p>We only collect what you choose to send through the contact form:</p>
       <ul>
@@ -38,7 +40,7 @@ export const privacyPolicy = {
     ['How we use it', <p key="p">We use your details to reply to your enquiry, to arrange and hold any consultation you ask for, and to keep a record of our correspondence with you. We do not sell your details, use them for marketing you have not asked for, or share them with other organizations except the service providers that host our website and email, who act on our instructions.</p>],
     ['How long we keep it', <p key="p">We keep enquiry details for as long as we need them to respond to you and to keep a reasonable record of our dealings with you. When we no longer need them, we delete them.</p>],
     ['WhatsApp and outside links', <p key="p">If you contact us with the WhatsApp button, your message goes through WhatsApp and is covered by WhatsApp's own privacy policy. Photo credits link to the sites where the photographers published their work; those sites have their own policies.</p>],
-    ['Your rights', <p key="p">Under Ghana's Data Protection Act, 2012 (Act 843) you can ask us what personal data we hold about you, ask us to correct it, and ask us to delete it or stop using it. Call us on <a href={`tel:${PHONE.replaceAll(' ', '')}`}>{PHONE}</a> to make a request. If you are not satisfied with our response, you can complain to the Data Protection Commission of Ghana.</p>],
+    ['Your rights', <p key="p">Under Ghana's Data Protection Act, 2012 (Act 843) you can ask us what personal data we hold about you, ask us to correct it, and ask us to delete it or stop using it. Call us on {tel} or email {mail} to make a request. If you are not satisfied with our response, you can complain to the Data Protection Commission of Ghana.</p>],
     ['Changes', <p key="p">If we change how we handle your data, we will update this page and the date below.</p>],
   ],
 };
