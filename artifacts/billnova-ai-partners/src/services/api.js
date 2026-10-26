@@ -9,7 +9,9 @@ export const contactService = {
     const response = await fetch(endpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
+      // The enquiry form is anonymous, so no cookies: the shared backend only allows credentialed
+      // requests from its listed frontends, and browsers would block this one in production.
+      credentials: 'omit',
       body: JSON.stringify(payload),
     });
     let body = null;
